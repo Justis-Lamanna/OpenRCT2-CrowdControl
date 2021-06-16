@@ -1,0 +1,18 @@
+{
+  "name": "openrct2-crowdcontrol",
+  "verion": "1.0.0",
+  "author": "Milo Marten",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/Justis-Lamanna/OpenRCT2-CrowdControl"
+  },
+  "scripts": {
+    "build": "tsc",
+    "minify": "uglifyjs --compress --mangle --output out/CCPlugin.min.js -- out/CCPlugin.js",
+    "release": "npm run build && npm run minify"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.5",
+    "uglify-js": "^3.8.0"
+  }
+}

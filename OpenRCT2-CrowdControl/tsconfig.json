@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "ES5",
+    "outFile": "./out/CCPlugin.js"
+  },
+  "files": [ "CCPlugin.ts" ]
+}
