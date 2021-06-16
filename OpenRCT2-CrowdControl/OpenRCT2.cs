@@ -18,7 +18,7 @@ namespace CrowdControl
         public override Game Game { get; } = new Game(90, "OpenRCT2", "OpenRCT2", "PC", ConnectorType.SimpleTCPConnector);
 
         public override List<Effect> Effects => new List<Effect> {
-            new Effect("Test this", "test")
+            new Effect("Test An Effect", "test")
         };
     }
 }
