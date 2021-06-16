@@ -1,0 +1,174 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>OpenRCT2_CrowdControl</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AsmJit">
+      <HintPath>..\..\..\crowd-control\SDK\AsmJit.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\..\crowd-control\SDK\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ConnectorLib">
+      <HintPath>..\..\..\crowd-control\SDK\ConnectorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ConnectorLib.Inject">
+      <HintPath>..\..\..\crowd-control\SDK\ConnectorLib.Inject.dll</HintPath>
+    </Reference>
+    <Reference Include="ConnectorLib.IRC">
+      <HintPath>..\..\..\crowd-control\SDK\ConnectorLib.IRC.dll</HintPath>
+    </Reference>
+    <Reference Include="ConnectorLib.RCON">
+      <HintPath>..\..\..\crowd-control\SDK\ConnectorLib.RCON.dll</HintPath>
+    </Reference>
+    <Reference Include="ConnectorLib.sd2snes">
+      <HintPath>..\..\..\crowd-control\SDK\ConnectorLib.sd2snes.dll</HintPath>
+    </Reference>
+    <Reference Include="CrowdControl.Client.Binary">
+      <HintPath>..\..\..\crowd-control\SDK\CrowdControl.Client.Binary.dll</HintPath>
+    </Reference>
+    <Reference Include="CrowdControl.Common">
+      <HintPath>..\..\..\crowd-control\SDK\CrowdControl.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="CrowdControl.Games">
+      <HintPath>..\..\..\crowd-control\SDK\CrowdControl.Games.dll</HintPath>
+    </Reference>
+    <Reference Include="CrowdControl.SDK">
+      <HintPath>..\..\..\crowd-control\SDK\CrowdControl.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Compiler.CodeDom">
+      <HintPath>..\..\..\crowd-control\SDK\FSharp.Compiler.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="IrcD.Net">
+      <HintPath>..\..\..\crowd-control\SDK\IrcD.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\..\..\crowd-control\SDK\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Meebey.SmartIrc4net">
+      <HintPath>..\..\..\crowd-control\SDK\Meebey.SmartIrc4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>..\..\..\crowd-control\SDK\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>..\..\..\crowd-control\SDK\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\..\crowd-control\SDK\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\..\crowd-control\SDK\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\..\crowd-control\SDK\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\..\..\crowd-control\SDK\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\..\crowd-control\SDK\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\crowd-control\SDK\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PeNet">
+      <HintPath>..\..\..\crowd-control\SDK\PeNet.dll</HintPath>
+    </Reference>
+    <Reference Include="PeNet.Asn1">
+      <HintPath>..\..\..\crowd-control\SDK\PeNet.Asn1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDisasm">
+      <HintPath>..\..\..\crowd-control\SDK\SharpDisasm.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>..\..\..\crowd-control\SDK\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition.Registration">
+      <HintPath>..\..\..\crowd-control\SDK\System.ComponentModel.Composition.Registration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Odbc">
+      <HintPath>..\..\..\crowd-control\SDK\System.Data.Odbc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.OleDb">
+      <HintPath>..\..\..\crowd-control\SDK\System.Data.OleDb.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\..\crowd-control\SDK\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.EventLog">
+      <HintPath>..\..\..\crowd-control\SDK\System.Diagnostics.EventLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.PerformanceCounter">
+      <HintPath>..\..\..\crowd-control\SDK\System.Diagnostics.PerformanceCounter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices.AccountManagement">
+      <HintPath>..\..\..\crowd-control\SDK\System.DirectoryServices.AccountManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices.Protocols">
+      <HintPath>..\..\..\crowd-control\SDK\System.DirectoryServices.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\..\..\crowd-control\SDK\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Ports">
+      <HintPath>..\..\..\crowd-control\SDK\System.IO.Ports.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management">
+      <HintPath>..\..\..\crowd-control\SDK\System.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client.Managed">
+      <HintPath>..\..\..\crowd-control\SDK\System.Net.WebSockets.Client.Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Private.ServiceModel">
+      <HintPath>..\..\..\crowd-control\SDK\System.Private.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Context">
+      <HintPath>..\..\..\crowd-control\SDK\System.Reflection.Context.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching">
+      <HintPath>..\..\..\crowd-control\SDK\System.Runtime.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Pkcs">
+      <HintPath>..\..\..\crowd-control\SDK\System.Security.Cryptography.Pkcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Duplex">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.Duplex.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Http">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.NetTcp">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.NetTcp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Security">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Syndication">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceModel.Syndication.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess.ServiceController">
+      <HintPath>..\..\..\crowd-control\SDK\System.ServiceProcess.ServiceController.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Speech">
+      <HintPath>..\..\..\crowd-control\SDK\System.Speech.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\..\..\crowd-control\SDK\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsInput">
+      <HintPath>..\..\..\crowd-control\SDK\WindowsInput.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
