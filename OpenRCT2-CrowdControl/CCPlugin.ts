@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../source/repos/OpenRCT2/distribution/openrct2.d.ts" />
+﻿/// <reference path="libs/openrct2.d.ts" />
 
 var main = () => {
     console.log("Hello, world!");
