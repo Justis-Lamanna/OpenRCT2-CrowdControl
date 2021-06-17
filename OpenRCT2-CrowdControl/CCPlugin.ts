@@ -1,7 +1,16 @@
 ﻿/// <reference path="libs/openrct2.d.ts" />
 
+const port = 43384;
+var enabled = false;
+
 var main = () => {
-    console.log("Hello, world!");
+    //Create two menu items, that allow for in-game stopping and starting of Crowd Control.
+    ui.registerMenuItem("Start The Chaos", () => {
+        enabled = true;
+    });
+    ui.registerMenuItem("Stop The Chaos", () => {
+        enabled = false;
+    });
 }
 
 registerPlugin({
@@ -11,4 +20,4 @@ registerPlugin({
     type: 'remote',
     licence: 'MIT',
     main: main
-})
+});
