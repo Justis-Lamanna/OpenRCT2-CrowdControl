@@ -7,9 +7,9 @@ namespace CrowdControl
 {
     public class OpenRCT2 : SimpleTCPPack
     {
-        public override string Host { get; } = "0.0.0.0";
+        public override string Host { get; } = "127.0.0.1";
 
-        public override ushort Port { get; } = 43384;
+        public override ushort Port { get; } = 8081;
 
         public OpenRCT2(IPlayer player, Func<CrowdControlBlock, bool> responseHandler, Action<object> statusUpdateHandler) :
             base(player, responseHandler, statusUpdateHandler)
