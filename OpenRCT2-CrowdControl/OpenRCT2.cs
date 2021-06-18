@@ -37,6 +37,8 @@ namespace CrowdControl
 
             new Effect("Rides", "rides", ItemKind.Folder),
             new Effect("Unlock Random Ride", "unlockRide", "rides"),
+            new Effect("Unlock Random Coaster", "unlockCoaster", "rides"),
+            new Effect("Unlock Random Shop", "unlockShop", "rides"),
             new Effect("Fix a Ride", "fixRide", "rides"),
             new Effect("Fix All Rides", "fixAllRides", "rides"),
             new Effect("Break a Ride", "breakRide", "rides"),
