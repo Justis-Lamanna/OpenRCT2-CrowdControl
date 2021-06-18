@@ -1,8 +1,10 @@
 ﻿/// <reference path="libs/openrct2.d.ts" />
 
 const port = 8081;
+const TRACE = function (msg) { console.log(msg); }
+const EOT = "\0";
+
 let enabled = false;
-let connected = false;
 let socket: Socket = network.createSocket();
 
 interface CCEffect {
@@ -12,34 +14,62 @@ interface CCEffect {
     type: number;
 }
 
-function handleEffect(effect: CCEffect) {
+interface CCResponse {
+    id: number;
+    status: CCStatus;
+    msg?: string;
+}
+
+enum CCStatus {
+    SUCCESS = 0,
+    FAILED,
+    NOT_AVAILABLE,
+    RETRY
+}
+
+function handleEffect(effect: CCEffect): CCStatus {
     park.postMessage({
         type: "money",
         text: effect.viewer + " redeemed an effect: " + effect.code
     });
+
+    return CCStatus.SUCCESS;
+}
+
+function respond(response: CCResponse): void {
+    const responseStr = JSON.stringify(response);
+    TRACE("Responding with " + responseStr);
+    socket.write(responseStr + EOT);
 }
 
 var main = () => {
     function connect() {
         socket.connect(port, "127.0.0.1", () => {
-            console.log("Received connection to Crowd Control");
-            connected = true;
+            TRACE("Received connection to Crowd Control");
         });
     }
 
     socket.on("data", (data) => {
         data = data.slice(0, -1); //Incoming from CC has weird ending character that messes things up.
-        console.log("Received raw data >" + data + "<");
+        TRACE("Received raw data >" + data + "<");
+        const json: CCEffect = JSON.parse(data);
         if (enabled) {
-            handleEffect(JSON.parse(data));
+            respond({
+                id: json.id,
+                status: handleEffect(json)
+            });
+        } else {
+            respond({
+                id: json.id,
+                status: CCStatus.NOT_AVAILABLE,
+                msg: "Crowd Control not enabled in OpenRCT2"
+            });
         }
     }).on("error", (error) => {
-        connected = false;
-        console.log("Encountered an error: " + error + ", attempting reconnect");
+        TRACE("Encountered an error: " + error + ", attempting reconnect");
         connect();
     }).on("close", () => {
-        connected = false;
-        console.log("Connection was closed, attempting reconnect");
+        TRACE("Connection was closed, attempting reconnect");
         connect();
     });
 
