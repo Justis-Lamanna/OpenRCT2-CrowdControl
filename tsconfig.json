@@ -6,5 +6,5 @@
     "target": "ES5",
     "outFile": "./out/CCPlugin.js"
   },
-  "files": [ "./OpenRCT2-CrowdControl/CCPlugin.ts" ]
+  "files": [ "./OpenRCT2-CrowdControl/CCHandlers.ts", "./OpenRCT2-CrowdControl/CCPlugin.ts" ]
 }

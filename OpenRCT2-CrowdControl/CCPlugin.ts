@@ -1,40 +1,13 @@
 ﻿/// <reference path="libs/openrct2.d.ts" />
+/// <reference path="CCTypes.ts" />
+/// <reference path="CCHandlers.ts" />
 
 const port = 8081;
 const TRACE = function (msg) { console.log(msg); }
 const EOT = "\0";
 
 let enabled = false;
-let socket: Socket = network.createSocket();
-
-interface CCEffect {
-    id: number;
-    code: string;
-    viewer: string;
-    type: number;
-}
-
-interface CCResponse {
-    id: number;
-    status: CCStatus;
-    msg?: string;
-}
-
-enum CCStatus {
-    SUCCESS = 0,
-    FAILED,
-    NOT_AVAILABLE,
-    RETRY
-}
-
-function handleEffect(effect: CCEffect): CCStatus {
-    park.postMessage({
-        type: "money",
-        text: effect.viewer + " redeemed an effect: " + effect.code
-    });
-
-    return CCStatus.SUCCESS;
-}
+let socket: Socket = network.createSocket().setNoDelay(true);
 
 function respond(response: CCResponse): void {
     const responseStr = JSON.stringify(response);
@@ -56,7 +29,7 @@ var main = () => {
         if (enabled) {
             respond({
                 id: json.id,
-                status: handleEffect(json)
+                status: handle(json)
             });
         } else {
             respond({
