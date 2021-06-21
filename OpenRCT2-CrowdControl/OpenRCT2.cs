@@ -31,8 +31,16 @@ namespace CrowdControl
             new Effect("Force Scenario Win", "forceWin", "timeTravel"),
 
             new Effect("Weather", "_weather", ItemKind.Folder),
-            new Effect("Change Weather", "changeWeather", new[]{"weather"}, "_weather"),
-            new Effect("Random Weather", "randomWeather", "_weather"),
+            new Effect("Make it Sunny", "forceWeather0", "_weather"),
+            new Effect("Make it Partly Cloudy", "forceWeather1", "_weather"),
+            new Effect("Make it Cloudy", "forceWeather2", "_weather"),
+            new Effect("Make it Rain", "forceWeather3", "_weather"),
+            new Effect("Make it Really Rain", "forceWeather4", "_weather"),
+            new Effect("Make it Storm", "forceWeather5", "_weather"),
+            new Effect("Make it Snow", "forceWeather6", "_weather"),
+            new Effect("Make it Really Snow", "forceWeather7", "_weather"),
+            new Effect("Make it Blizzard", "forceWeather8", "_weather"),
+            new Effect("Random Weather", "forceWeatherRandom", "_weather"),
             new Effect("Freeze Weather", "freezeWeather", "_weather"),
 
             new Effect("Rides", "rides", ItemKind.Folder),
