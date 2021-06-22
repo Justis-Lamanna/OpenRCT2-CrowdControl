@@ -1,6 +1,6 @@
 ﻿/// <reference path="libs/openrct2.d.ts" />
 /// <reference path="CCTypes.ts" />
-/// <reference path="CCConstants.ts" />
+/// <reference path="CCUtils.ts" />
 
 function noop(result: GameActionResult): void { }
 
@@ -17,6 +17,10 @@ function cheat(cheat: Cheat, p1: number = 0, p2: number = 0) {
         param1: p1,
         param2: p2
     }, noop);
+}
+
+function isBrokenDown(ride: Ride): boolean {
+    return (ride.lifecycleFlags & 192) != 0;
 }
 
 class Handler {
@@ -68,21 +72,30 @@ function despawnDucks(effect: CCEffect): CCStatus {
 }
 
 function goBackOneMonth(effect: CCEffect): CCStatus {
-    const monthsElapsed = date.monthProgress;
-    if (monthsElapsed == 0) {
+    const monthsElapsed = date.monthProgress - 1;
+    if (monthsElapsed < 0) {
         return CCStatus.RETRY;
     }
-    date.monthProgress = monthsElapsed - 1;
+    const year = Math.floor(monthsElapsed / 8);
+    const month = monthsElapsed % 8;
+    context.executeAction("parksetdate", {
+        year: year + 1,
+        month: month + 1,
+        day: date.day
+    }, noop);
 
-    rctMessage(`${effect.viewer} forced the date to ${formatDate(date.day, date.month, date.year)}`);
+    rctMessage(`${effect.viewer} forced the date to ${formatDate(date.day, month + 1, year + 1)}`);
     return CCStatus.SUCCESS;
 }
 
 function goBackToStart(effect: CCEffect): CCStatus {
-    date.monthProgress = 0;
-    date.monthsElapsed = 0;
+    context.executeAction("parksetdate", {
+        year: 1,
+        month: 1,
+        day: 1
+    }, noop);
 
-    rctMessage(`${effect.viewer} forced the date to ${formatDate(date.day, date.month, date.year)}`);
+    rctMessage(`${effect.viewer} forced the date to March, Year 1`);
     return CCStatus.SUCCESS;
 }
 
@@ -118,6 +131,49 @@ function unfreezeWeather(effect: CCEffect): CCStatus {
     return CCStatus.SUCCESS;
 }
 
+function fixAllRides(effect: CCEffect): CCStatus {
+    cheat(Cheat.FixRides);
+
+    rctMessage(`${effect.viewer} fixed all the rides!`);
+    return CCStatus.SUCCESS;
+}
+
+function fastChainLifts(effect: CCEffect): CCStatus {
+    cheat(Cheat.FastLiftHill, 1);
+
+    for (let i = 0; i < map.numRides; i++) {
+        const ride = map.getRide(i);
+        if (ride.classification == "ride") {
+            context.executeAction("ridesetsetting", {
+                ride: ride.id,
+                setting: 8,
+                value: 100
+            }, noop);
+        }
+    }
+
+    rctMessage(`${effect.viewer} sped up the chain lifts`);
+    return CCStatus.SUCCESS;
+}
+
+function slowChainLifts(effect: CCEffect): CCStatus {
+    cheat(Cheat.FastLiftHill, 1);
+
+    for (let i = 0; i < map.numRides; i++) {
+        const ride = map.getRide(i);
+        if (ride.classification == "ride") {
+            context.executeAction("ridesetsetting", {
+                ride: ride.id,
+                setting: 8,
+                value: 1
+            }, noop);
+        }
+    }
+
+    rctMessage(`${effect.viewer} slowed down the chain lifts`);
+    return CCStatus.SUCCESS;
+}
+
 let handlers: { [key: string]: Handler } = {
     give100: new Handler((effect: CCEffect) => addMoney(effect, 100)),
     give1000: new Handler((effect: CCEffect) => addMoney(effect, 1000)),
@@ -140,6 +196,10 @@ let handlers: { [key: string]: Handler } = {
     forceWeather7: new Handler((effect: CCEffect) => forceWeather(effect, 7)),
     forceWeather8: new Handler((effect: CCEffect) => forceWeather(effect, 8)),
     freezeWeather: new Handler(freezeWeather, unfreezeWeather),
+
+    fixAllRides: new Handler(fixAllRides),
+    fastChainLift: new Handler(fastChainLifts),
+    slowChainLift: new Handler(slowChainLifts),
 
     spawnDucks: new Handler(spawnDucks),
     clearDucks: new Handler(despawnDucks)
