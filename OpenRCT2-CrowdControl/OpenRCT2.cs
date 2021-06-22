@@ -54,7 +54,7 @@ namespace CrowdControl
             new Effect("Slow Chain Lifts", "slowChainLift", "rides"),
 
             new Effect("Peeps", "peeps", ItemKind.Folder),
-            new Effect("Name Peep After Me", "peepNameAfterDonator", "peeps"),
+            //new Effect("Name Peep After Me", "peepNameAfterDonator", "peeps"),
             new Effect("Recolor Peeps", "peepRecolor", "peeps"),
             new Effect("Feed Peeps", "peepFeed", "peeps"),
             new Effect("Make Peeps Hungry", "peepUnfeed", "peeps"),
@@ -74,6 +74,7 @@ namespace CrowdControl
             new Effect("Water Plants", "waterPlants", "scenery"),
             new Effect("Burn Plants", "burnPlants", "scenery"),
             new Effect("Smash Scenery", "smashScenery", "scenery"),
+            new Effect("Fix Scenery", "fixScenery", "scenery"),
 
             new Effect("Spawn Ducks", "spawnDucks"),
             new Effect("Clear Ducks", "clearDucks"),

@@ -242,6 +242,48 @@ function peepGiveBalloon(effect: CCEffect): CCStatus {
     return CCStatus.SUCCESS;
 }
 
+function removeLitter(effect: CCEffect): CCStatus {
+    cheat(Cheat.RemoveLitter);
+    rctMessage(`${effect.viewer} cleaned the place up!`);
+    return CCStatus.SUCCESS;
+}
+
+function mowGrass(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGrassLength, 0);
+    rctMessage(`${effect.viewer} mowed the lawn!`);
+    return CCStatus.SUCCESS;
+}
+
+function unmowGrass(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGrassLength, 100);
+    rctMessage(`${effect.viewer} made the grass grow!`);
+    return CCStatus.SUCCESS;
+}
+
+function waterPlants(effect: CCEffect): CCStatus {
+    cheat(Cheat.WaterPlants);
+    rctMessage(`${effect.viewer} watered the plants!`);
+    return CCStatus.SUCCESS;
+}
+
+function killPlants(effect: CCEffect): CCStatus {
+    context.executeAction("killPlants", {}, noop);
+    rctMessage(`${effect.viewer} killed the plants!`);
+    return CCStatus.SUCCESS;
+}
+
+function breakThings(effect: CCEffect): CCStatus {
+    context.executeAction("breakThings", {}, noop);
+    rctMessage(`${effect.viewer} broke things!`);
+    return CCStatus.SUCCESS;
+}
+
+function fixThings(effect: CCEffect): CCStatus {
+    cheat(Cheat.FixVandalism);
+    rctMessage(`${effect.viewer} fixed things!`);
+    return CCStatus.SUCCESS;
+}
+
 let handlers: { [key: string]: Handler } = {
     give100: new Handler((effect: CCEffect) => addMoney(effect, 100)),
     give1000: new Handler((effect: CCEffect) => addMoney(effect, 1000)),
@@ -280,6 +322,14 @@ let handlers: { [key: string]: Handler } = {
     peepGiveMoney: new Handler((effect: CCEffect) => peepGiveCash(effect, 20)),
     peepTakeMoney: new Handler((effect: CCEffect) => peepGiveCash(effect, -20)),
     peepGiveBalloon: new Handler(peepGiveBalloon),
+
+    cleanPaths: new Handler(removeLitter),
+    mowGrass: new Handler(mowGrass),
+    unmowGrass: new Handler(unmowGrass),
+    waterPlants: new Handler(waterPlants),
+    burnPlants: new Handler(killPlants),
+    smashScenery: new Handler(breakThings),
+    fixScenery: new Handler(fixThings),
 
     spawnDucks: new Handler(spawnDucks),
     clearDucks: new Handler(despawnDucks)

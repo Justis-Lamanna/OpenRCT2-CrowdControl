@@ -102,6 +102,36 @@ var main = () => {
         }
         return {};
     });
+
+    context.registerAction("killPlants", (args: any) => { return {} }, (args: any) => {
+        for (let y = 0; y < map.size.y; y++) {
+            for (let x = 0; x < map.size.x; x++) {
+                const tile = map.getTile(x, y);
+                for (var i = 0; i < tile.numElements; i++) {
+                    const element = tile.getElement(i);
+                    if (element.type == "small_scenery") {
+                        (element as SmallSceneryElement).age = 100;
+                    }
+                }
+            }
+        }
+        return {};
+    });
+
+    context.registerAction("breakThings", (args: any) => { return {} }, (args: any) => {
+        for (let y = 0; y < map.size.y; y++) {
+            for (let x = 0; x < map.size.x; x++) {
+                const tile = map.getTile(x, y);
+                for (var i = 0; i < tile.numElements; i++) {
+                    const element = tile.getElement(i);
+                    if (element.type == "footpath") {
+                        (element as FootpathElement).isAdditionBroken = (context.getRandom(0, 10) == 0);
+                    }
+                }
+            }
+        }
+        return {};
+    });
 }
 
 registerPlugin({
