@@ -152,7 +152,7 @@ function fastChainLifts(effect: CCEffect): CCStatus {
         }
     }
 
-    rctMessage(`${effect.viewer} sped up the chain lifts`);
+    rctMessage(`${effect.viewer} sped up the chain lifts!`);
     return CCStatus.SUCCESS;
 }
 
@@ -170,7 +170,75 @@ function slowChainLifts(effect: CCEffect): CCStatus {
         }
     }
 
-    rctMessage(`${effect.viewer} slowed down the chain lifts`);
+    rctMessage(`${effect.viewer} slowed down the chain lifts!`);
+    return CCStatus.SUCCESS;
+}
+
+let peepQueue: string[] = [];
+
+function peepNameAfterDonator(effect: CCEffect): CCStatus {
+    peepQueue.push(effect.viewer);
+    return CCStatus.SUCCESS;
+}
+
+function peepRandomColor(effect: CCEffect): CCStatus {
+    const color = context.getRandom(0, 31);
+
+    context.executeAction("guestSetColor", { color: color }, noop);
+
+    rctMessage(`${effect.viewer} changed the fashion!`)
+    return CCStatus.SUCCESS;
+}
+
+function peepHungry(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 2, 0);
+    rctMessage(`${effect.viewer} made the guests ravenous.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepFull(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 2, 255);
+    rctMessage(`${effect.viewer} made the guests stuffed.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepThirsty(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 3, 0);
+    rctMessage(`${effect.viewer} made the guests very thirsty.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepQuench(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 3, 255);
+    rctMessage(`${effect.viewer} made the guests no longer thirsty.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepPee(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 6, 255);
+    rctMessage(`${effect.viewer} made the guests need to use the restroom.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepNoPee(effect: CCEffect): CCStatus {
+    cheat(Cheat.SetGuestParameter, 6, 0);
+    rctMessage(`${effect.viewer} made the guests no longer need to use the restroom.`);
+    return CCStatus.SUCCESS;
+}
+
+function peepGiveCash(effect: CCEffect, amount: number): CCStatus {
+    context.executeAction("guestAddMoney", { money: amount }, noop);
+    if (amount < 0) {
+        rctMessage(`${effect.viewer} stole $${amount}.00 from all the guests.`)
+    } else if (amount > 0) {
+        rctMessage(`${effect.viewer} gave $${amount}.00 to all the guests.`)
+    }
+    return CCStatus.SUCCESS;
+}
+
+function peepGiveBalloon(effect: CCEffect): CCStatus {
+    cheat(Cheat.GiveAllGuests, 2);
+    rctMessage(`${effect.viewer} gave everyone a balloon!`);
     return CCStatus.SUCCESS;
 }
 
@@ -200,6 +268,18 @@ let handlers: { [key: string]: Handler } = {
     fixAllRides: new Handler(fixAllRides),
     fastChainLift: new Handler(fastChainLifts),
     slowChainLift: new Handler(slowChainLifts),
+
+    //peepNameAfterDonator: new Handler(peepNameAfterDonator),
+    peepRecolor: new Handler(peepRandomColor),
+    peepFeed: new Handler(peepFull),
+    peepUnfeed: new Handler(peepHungry),
+    peepDrink: new Handler(peepQuench),
+    peepUndrink: new Handler(peepThirsty),
+    peepFillBladder: new Handler(peepPee),
+    peepEmptyBladder: new Handler(peepNoPee),
+    peepGiveMoney: new Handler((effect: CCEffect) => peepGiveCash(effect, 20)),
+    peepTakeMoney: new Handler((effect: CCEffect) => peepGiveCash(effect, -20)),
+    peepGiveBalloon: new Handler(peepGiveBalloon),
 
     spawnDucks: new Handler(spawnDucks),
     clearDucks: new Handler(despawnDucks)

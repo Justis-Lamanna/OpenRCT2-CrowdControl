@@ -65,7 +65,7 @@ namespace CrowdControl
             new Effect("Give Peeps Money", "peepGiveMoney", "peeps"),
             new Effect("Take Peeps' Money", "peepTakeMoney", "peeps"),
             new Effect("Give Peeps Balloons", "peepGiveBalloon", "peeps"),
-            new Effect("Release Peeps' Balloons", "peepReleaseBalloon", "peeps"),
+            //new Effect("Release Peeps' Balloons", "peepReleaseBalloon", "peeps"),
 
             new Effect("Scenery", "scenery", ItemKind.Folder),
             new Effect("Clean Paths", "cleanPaths", "scenery"),

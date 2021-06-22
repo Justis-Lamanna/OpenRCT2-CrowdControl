@@ -6,7 +6,7 @@ const port = 8081;
 const TRACE = function (msg) { console.log(msg); }
 const EOT = "\0";
 
-let enabled = false;
+let enabled = true;
 let socket: Socket = network.createSocket().setNoDelay(true);
 
 function respond(response: CCResponse): void {
@@ -46,16 +46,62 @@ var main = () => {
         connect();
     });
 
-    //Create two menu items, that allow for in-game stopping and starting of Crowd Control.
-    ui.registerMenuItem("Start The Chaos", () => {
-       enabled = true;
-    });
-
-    ui.registerMenuItem("Stop The Chaos", () => {
-        enabled = false;
-    });
-
     connect();
+
+    //Handle renames as guests enter the park
+    /*context.subscribe("guest.generation", (e) => {
+        if (peepQueue.length > 0) {
+            const peep = map.getEntity(e);
+            if (peep != null && peep.type == "peep" && (peep as Peep).peepType == "guest") {
+                context.executeAction("guestsetname", {
+                    peep: peep.id,
+                    name: peepQueue[0]
+                }, noop);
+
+                park.postMessage({
+                    type: "peep",
+                    text: peepQueue[0] + " has entered the park!",
+                    subject: peep.id
+                });
+
+                peepQueue.shift();
+            }
+        }
+    });*/
+
+    context.registerAction("guestSetColor", (args: any) => {
+        return {};
+    }, (args: any) => {
+        const peeps = map.getAllEntities("peep");
+        const color = args.color;
+        for (let i = 0; i < peeps.length; i++) {
+            const peep = peeps[i];
+            if (peep.peepType == "guest") {
+                (peep as Guest).tshirtColour = color;
+                (peep as Guest).trousersColour = color;
+            }
+        }
+        return {};
+    });
+
+    context.registerAction("guestAddMoney", (args: any) => {
+        return {}
+    }, (args: any) => {
+        const peeps = map.getAllEntities("peep");
+        for (let i = 0; i < peeps.length; i++) {
+            const peep = peeps[i];
+            if (peep.peepType == "guest") {
+                let cash = (peep as Guest).cash + args.money;
+                if (cash < 0) {
+                    cash = 0;
+                } else if (cash > 1000) {
+                    cash = 1000;
+                }
+                (peep as Guest).cash = cash;
+            }
+        }
+        return {};
+    });
 }
 
 registerPlugin({
