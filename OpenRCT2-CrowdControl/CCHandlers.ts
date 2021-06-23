@@ -1,6 +1,7 @@
 ﻿/// <reference path="libs/openrct2.d.ts" />
 /// <reference path="CCTypes.ts" />
 /// <reference path="CCUtils.ts" />
+/// <reference path="CCAds.ts" />
 
 function noop(result: GameActionResult): void { }
 
@@ -284,6 +285,25 @@ function fixThings(effect: CCEffect): CCStatus {
     return CCStatus.SUCCESS;
 }
 
+function spawnRandomWindows(effect: CCEffect): CCStatus {
+    if (ui) {
+        const randomNumber = context.getRandom(1, 6);
+        for (let i = 0; i < randomNumber; i++) {
+            showRandomAd();
+        }
+        return CCStatus.SUCCESS;
+    }
+    return CCStatus.FAILED;
+}
+
+function closeAllWindows(effect: CCEffect): CCStatus {
+    if (ui) {
+        ui.closeAllWindows();
+        rctMessage(`${effect.viewer} closed your windows!`);
+    }
+    return CCStatus.FAILED;
+}
+
 let handlers: { [key: string]: Handler } = {
     give100: new Handler((effect: CCEffect) => addMoney(effect, 100)),
     give1000: new Handler((effect: CCEffect) => addMoney(effect, 1000)),
@@ -332,7 +352,10 @@ let handlers: { [key: string]: Handler } = {
     fixScenery: new Handler(fixThings),
 
     spawnDucks: new Handler(spawnDucks),
-    clearDucks: new Handler(despawnDucks)
+    clearDucks: new Handler(despawnDucks),
+
+    openRandomWindows: new Handler(spawnRandomWindows),
+    closeAllWindows: new Handler(closeAllWindows)
 };
 
 function handle(effect: CCEffect): CCStatus {
@@ -342,6 +365,6 @@ function handle(effect: CCEffect): CCStatus {
     } else if (handler && effect.type == CCRequestType.STOP) {
         return handler.stopEffect(effect);
     } else {
-        return CCStatus.NOT_AVAILABLE;
+        return CCStatus.FAILED;
     }
 }
