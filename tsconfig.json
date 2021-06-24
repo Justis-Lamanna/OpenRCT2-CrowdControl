@@ -3,8 +3,12 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "removeComments": true,
+    "allowJs": true,
     "target": "ES5",
     "outFile": "./out/CCPlugin.js"
   },
-  "files": [ "./OpenRCT2-CrowdControl/CCUtils.ts", "./OpenRCT2-CrowdControl/CCAds.ts", "./OpenRCT2-CrowdControl/CCHandlers.ts", "./OpenRCT2-CrowdControl/CCPlugin.ts" ]
+  "include": [
+    "./OpenRCT2-CrowdControl/libs/*",
+    "./OpenRCT2-CrowdControl/*"
+  ]
 }

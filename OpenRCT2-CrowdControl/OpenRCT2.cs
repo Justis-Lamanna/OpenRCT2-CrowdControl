@@ -15,7 +15,7 @@ namespace CrowdControl
             base(player, responseHandler, statusUpdateHandler)
         { }
 
-        public override Game Game { get; } = new Game(90, "OpenRCT2", "OpenRCT2", "PC", ConnectorType.SimpleTCPConnector);
+        public override Game Game { get; } = new Game(487, "OpenRCT2", "OpenRCT2", "PC", ConnectorType.SimpleTCPConnector);
 
         public override List<Effect> Effects => new List<Effect> {
             new Effect("Money", "money", ItemKind.Folder),
@@ -80,11 +80,6 @@ namespace CrowdControl
             new Effect("Clear Ducks", "clearDucks"),
             new Effect("Open Random Windows", "openRandomWindows"),
             new Effect("Close All Windows", "closeAllWindows")
-        };
-
-
-        public override List<ItemType> ItemTypes => new List<ItemType> {
-            new ItemType("Weather", "weather", ItemType.Subtype.ItemList, "Sunny,Partly Cloudy,Cloudy,Rain,Heavy Rain,Thunderstorm,Snow,Heavy Snow,Blizzard")
         };
     }
 }

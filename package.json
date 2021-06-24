@@ -11,8 +11,11 @@
     "minify": "uglifyjs --compress --mangle --output out/CCPlugin.min.js -- out/CCPlugin.js",
     "release": "npm run build && npm run minify"
   },
+  "dependencies": {
+    "socket.io": "4.1.2"
+  },
   "devDependencies": {
-    "typescript": "^3.7.5",
+    "typescript": "^3.9.10",
     "uglify-js": "^3.8.0"
   }
 }

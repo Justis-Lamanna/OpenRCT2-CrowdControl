@@ -20,10 +20,6 @@ function cheat(cheat: Cheat, p1: number = 0, p2: number = 0) {
     }, noop);
 }
 
-function isBrokenDown(ride: Ride): boolean {
-    return (ride.lifecycleFlags & 192) != 0;
-}
-
 class Handler {
     startEffect: (effect: CCEffect) => CCStatus;
     stopEffect: (effect: CCEffect) => CCStatus;
